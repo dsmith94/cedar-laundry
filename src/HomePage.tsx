@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Dimensions, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import RootStackParamList from './RootStackParamList';
 import { StackScreenProps } from '@react-navigation/stack';
+import { Audio } from 'expo-av';
 import NameSlot from './NameSlot';
 import Player from './Player';
+import { useIsFocused } from '@react-navigation/native';
 
 
 const image = { uri: require('../assets/bg.jpg') };
@@ -14,13 +16,38 @@ type Props = StackScreenProps<RootStackParamList, 'Home'>;
 function HomePage({ route, navigation }: Props) {
   
     const [players, setPlayers] = useState([new Player()]);
+    const [sound, setSound] = useState<Audio.Sound | null>(null);
+
+    async function playAudio() {
+      const { sound } = await Audio.Sound.createAsync(require('../assets/title.ogg'));
+      setSound(sound);  
+      await sound.playAsync();
+    }
+
+
+    async function playSoftAudio() {
+      const { sound } = await Audio.Sound.createAsync(require('../assets/soft.wav'));
+      await sound.playAsync();
+    }
+
+
+    async function playDrumAudio() {
+      const { sound } = await Audio.Sound.createAsync(require('../assets/drum.wav'));
+      await sound.playAsync();
+    }
+
+    if (useIsFocused()) {
+      if (!sound) {
+        playAudio();
+      }
+    }
     
     return (
         <View style={styles.container}>
             <ImageBackground source={image} resizeMode="cover" style={styles.image}>
                 <View style={styles.roundedContainer}>
                     <Text style={styles.text}>
-                        Select Contestants
+                        select contestants
                     </Text>
                     {players.map((v, index) => <NameSlot 
                         
@@ -36,6 +63,7 @@ function HomePage({ route, navigation }: Props) {
                           setPlayers([...players]);
                         }}
                         deleteIndex={() => {
+                            playDrumAudio();
                             players.splice(index, 1);
                             setPlayers([...players]);
                         }}
@@ -43,6 +71,10 @@ function HomePage({ route, navigation }: Props) {
                     />)}
                     {(players.length > 1) &&
                     <TouchableOpacity style={styles.bottomButton} onPress={() => {
+                      if (sound) {
+                        sound.stopAsync();
+                        setSound(null);
+                      }
                         navigation.navigate('Play', {players: players});
                     }}>
                         <Text style={styles.text}>
@@ -53,6 +85,7 @@ function HomePage({ route, navigation }: Props) {
                     <TouchableOpacity style={styles.endButton} onPress={() => {
                         const p = new Player();
                         p.image = Math.floor(Math.random() * 10);
+                        playSoftAudio();
                         players.push(p);
                         setPlayers([...players]);
                     }}>

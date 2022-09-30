@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import { Dimensions, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Audio } from 'expo-av';
 
 const timerStart = 30;
 let timeOut: any = null;
@@ -30,15 +31,21 @@ function VerseCard(props: {verse: string, finishTurn: (chapter: string, timeLeft
     const [chapter, setChapter] = useState('');
     const [timeRemaining, setTimeRemaining] = useState(timerStart);
 
+    async function playAudio() {
+      const { sound } = await Audio.Sound.createAsync(require('../assets/high.wav'));
+      await sound.playAsync();
+    }
+  
     useEffect(() => {
       let rm = timeRemaining;
+      playAudio();
       timeOut = setInterval(() => {
         if (rm > 0) {
           rm -= 1;
           setTimeRemaining(rm);
         }
       }, 1000);
-    });
+    }, []);
 
     const exitForm = () => {
       if (timeOut) {

@@ -1,14 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { StyleSheet, Text, View } from 'react-native';
+import { Audio } from 'expo-av';
 
 
 function NoCard(props: {citation: string, verse: string, currentTotal: number}) {
 
+  async function playAudio() {
+    const { sound } = await Audio.Sound.createAsync(require('../assets/wrong.wav'));
+    await sound.playAsync();
+  }
+
+  useEffect(() => {
+    playAudio();
+  }, []);
+
     return (
         <View style={styles.container}>
             <Text style={styles.noText}>
-                Sorry, Not Quite
+                sorry, not quite
             </Text>
             <View style={styles.backGround}>
               <Text style={styles.subText}>

@@ -178,10 +178,10 @@ function PlayPage({ route, navigation }: Props) {
                     {
                         (phase === 'yes') &&
                         <YesCard 
-                            player={players[index]}
                             verse={scriptures[0].front}
                             citation={scriptures[0].back}
                             pointsAdded={scoreBuffer}
+                            specialMsg={bonusActive}
                             currentTotal={score.get(index) ?? 0}
                         />
                     }

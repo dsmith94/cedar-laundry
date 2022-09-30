@@ -1,12 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { StyleSheet, Text, Dimensions, View, TouchableOpacity, Image } from 'react-native';
+import { Audio } from 'expo-av';
+
 import ImageBank from './ImageBank';
 import Player from './Player';
 
 
 function ScoreCard(props: {players: Player[], scores: Map<number, number>, finishCard: () => void}) {
     
+  async function playAudio() {
+    const { sound } = await Audio.Sound.createAsync(require('../assets/endgame.wav'));
+    await sound.playAsync();
+  }
+
+  useEffect(() => {
+    playAudio();
+  }, []);
+
     return (
         <View style={styles.container}>
             <Text style={styles.finalText}>
@@ -47,6 +58,7 @@ const styles = StyleSheet.create({
     fontFamily: 'CedarvilleCursive_400Regular',
   },
   playerStack: {
+    marginLeft: 20,
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center'

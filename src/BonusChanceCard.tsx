@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react';
 
 import { StyleSheet, Text, View, Dimensions, TextInput } from 'react-native';
+import { Audio } from 'expo-av';
+
 import Player from './Player';
 import PlayerTile from './PlayerTile';
 
@@ -11,6 +13,15 @@ function BonusChanceCard(props: {player: Player, setBonusChance: (v: boolean) =>
 
     const [input, setInput] = useState('');
 
+    async function playAudio() {
+      const { sound } = await Audio.Sound.createAsync(require('../assets/bonus.wav'));
+      await sound.playAsync();
+    }
+  
+    useEffect(() => {
+      playAudio();
+    }, []);
+
     const exitForm = () => {
         props.setBonusChance(input.toUpperCase().trim() === 'Y');
       }
@@ -20,7 +31,6 @@ function BonusChanceCard(props: {player: Player, setBonusChance: (v: boolean) =>
             <Text style={styles.chanceText}>
                 Bonus Chance
             </Text>
-            <PlayerTile player={props.player} />
             <View style={styles.backGround}>
               <Text style={styles.subText}>
                   You can double the points you get on the next Scripture!
@@ -46,8 +56,7 @@ function BonusChanceCard(props: {player: Player, setBonusChance: (v: boolean) =>
 
 const styles = StyleSheet.create({
   container: {
-    width: Dimensions.get('screen').width * 0.7,
-    height: Dimensions.get('screen').height * 0.7,
+    flex: 1,
   },
   backGround: {
     margin: 20,

@@ -3,7 +3,11 @@ import { View } from 'react-native';
 import RootStackParamList from './src/RootStackParamList';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomePage from './src/HomePage';
+import PlayPage from './src/PlayPage';
+import TitlePage from './src/TitlePage';
+
 import { NavigationContainer } from '@react-navigation/native';
+
 
 // fonts
 import { 
@@ -16,7 +20,6 @@ import {
 import { 
   BungeeShade_400Regular 
 } from '@expo-google-fonts/bungee-shade'
-import PlayPage from './src/PlayPage';
 
 
 const RootStack = createStackNavigator<RootStackParamList>();
@@ -35,10 +38,11 @@ export default function App() {
   }
   return (
       <NavigationContainer>
-        <RootStack.Navigator initialRouteName="Home">
+        <RootStack.Navigator initialRouteName="Title">
           <RootStack.Group screenOptions={{
             headerShown: false
           }}>
+            <RootStack.Screen name="Title" component={TitlePage} />
             <RootStack.Screen name="Home" component={HomePage} />
             <RootStack.Screen name="Play" component={PlayPage} />
           </RootStack.Group>

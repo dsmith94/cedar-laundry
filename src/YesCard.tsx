@@ -1,19 +1,24 @@
 import React, {useState, useEffect} from 'react';
 
 import { StyleSheet, Text, View, Dimensions } from 'react-native';
-import Player from './Player';
-import PlayerTile from './PlayerTile';
+import { Audio } from 'expo-av';
 
 
 let tmr: any = null;
 
-function YesCard(props: {player: Player, citation: string, verse: string, pointsAdded: number, currentTotal: number}) {
+function YesCard(props: {citation: string, verse: string, specialMsg: boolean, pointsAdded: number, currentTotal: number}) {
 
     const [finalTotal, setFinalTotal] = useState(props.currentTotal - props.pointsAdded);
     const [points, setPoints] = useState(props.pointsAdded);
 
+    async function playAudio() {
+      const { sound } = await Audio.Sound.createAsync(require('../assets/correct.wav'));
+      await sound.playAsync();
+    }
+
     useEffect(() => {
       let pt = props.pointsAdded;
+      playAudio();
       setTimeout(() => {
         tmr = setInterval(() => {
           if (pt > 0) {
@@ -30,9 +35,13 @@ function YesCard(props: {player: Player, citation: string, verse: string, points
     return (
         <View style={styles.container}>
             <Text style={styles.yesText}>
-                You're Right!
+                you're right!
             </Text>
-            <PlayerTile player={props.player} />
+            {(props.specialMsg === true) &&
+            <Text style={styles.specialText}>
+                x2 points awarded!
+            </Text>
+            }
             <View style={styles.backGround}>
               <Text style={styles.subText}>
                   {props.citation}
@@ -52,8 +61,7 @@ function YesCard(props: {player: Player, citation: string, verse: string, points
 
 const styles = StyleSheet.create({
   container: {
-    width: Dimensions.get('screen').width * 0.7,
-    height: Dimensions.get('screen').height * 0.7,
+    flex: 1
   },
   bottomBar: {
     width: Dimensions.get('screen').width * 0.7,
@@ -86,6 +94,11 @@ const styles = StyleSheet.create({
   bigScoreText: {
     fontSize: 64,
     fontFamily: 'Taviraj_600SemiBold_Italic'
+  },
+  specialText: {
+    fontSize: 80,
+    textAlign: 'center',
+    fontFamily: 'BungeeShade_400Regular'
   },
   text: {
     fontSize: 25,
