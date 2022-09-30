@@ -1,11 +1,11 @@
 {
   "files": {
-    "app.js": "/cedar-laundry/static/js/app.7bbd12eb.chunk.js",
-    "app.js.map": "/cedar-laundry/static/js/app.7bbd12eb.chunk.js.map",
+    "app.js": "/cedar-laundry/static/js/app.576b130d.chunk.js",
+    "app.js.map": "/cedar-laundry/static/js/app.576b130d.chunk.js.map",
     "runtime~app.js": "/cedar-laundry/static/js/runtime~app.7431af2f.js",
     "runtime~app.js.map": "/cedar-laundry/static/js/runtime~app.7431af2f.js.map",
-    "static/js/2.6d36a64b.chunk.js": "/cedar-laundry/static/js/2.6d36a64b.chunk.js",
-    "static/js/2.6d36a64b.chunk.js.map": "/cedar-laundry/static/js/2.6d36a64b.chunk.js.map",
+    "static/js/2.1f034fe4.chunk.js": "/cedar-laundry/static/js/2.1f034fe4.chunk.js",
+    "static/js/2.1f034fe4.chunk.js.map": "/cedar-laundry/static/js/2.1f034fe4.chunk.js.map",
     "fonts/BungeeShade_400Regular.ttf": "/cedar-laundry/./fonts/BungeeShade_400Regular.ttf",
     "fonts/CedarvilleCursive_400Regular.ttf": "/cedar-laundry/./fonts/CedarvilleCursive_400Regular.ttf",
     "fonts/Taviraj_100Thin.ttf": "/cedar-laundry/./fonts/Taviraj_100Thin.ttf",
@@ -32,7 +32,13 @@
     "index.html": "/cedar-laundry/index.html",
     "manifest.json": "/cedar-laundry/manifest.json",
     "serve.json": "/cedar-laundry/serve.json",
-    "static/js/2.6d36a64b.chunk.js.LICENSE.txt": "/cedar-laundry/static/js/2.6d36a64b.chunk.js.LICENSE.txt",
+    "static/js/2.1f034fe4.chunk.js.LICENSE.txt": "/cedar-laundry/static/js/2.1f034fe4.chunk.js.LICENSE.txt",
+    "static/media/bg.jpg": "/cedar-laundry/static/media/bg.d3195c8f.jpg",
+    "static/media/bonus.wav": "/cedar-laundry/static/media/bonus.59413eed.wav",
+    "static/media/correct.wav": "/cedar-laundry/static/media/correct.c53b0979.wav",
+    "static/media/drum.wav": "/cedar-laundry/static/media/drum.21d76ef0.wav",
+    "static/media/endgame.wav": "/cedar-laundry/static/media/endgame.75b9de61.wav",
+    "static/media/high.wav": "/cedar-laundry/static/media/high.3794625a.wav",
     "static/media/i00.jpg": "/cedar-laundry/static/media/i00.a3a20090.jpg",
     "static/media/i01.jpg": "/cedar-laundry/static/media/i01.3d97c719.jpg",
     "static/media/i02.jpg": "/cedar-laundry/static/media/i02.9742608b.jpg",
@@ -110,12 +116,14 @@
     "static/media/i74.jpg": "/cedar-laundry/static/media/i74.b0149259.jpg",
     "static/media/i75.jpg": "/cedar-laundry/static/media/i75.85239102.jpg",
     "static/media/i76.jpg": "/cedar-laundry/static/media/i76.58e97a1a.jpg",
-    "static/media/pastel-plaids-1.jpg": "/cedar-laundry/static/media/pastel-plaids-1.d3195c8f.jpg",
-    "static/media/pastel-plaids-8.jpg": "/cedar-laundry/static/media/pastel-plaids-8.b10336de.jpg"
+    "static/media/soft.wav": "/cedar-laundry/static/media/soft.a28289f8.wav",
+    "static/media/title.ogg": "/cedar-laundry/static/media/title.3ad820fa.ogg",
+    "static/media/turn.wav": "/cedar-laundry/static/media/turn.3dfb1ffe.wav",
+    "static/media/wrong.wav": "/cedar-laundry/static/media/wrong.ac7144df.wav"
   },
   "entrypoints": [
     "static/js/runtime~app.7431af2f.js",
-    "static/js/2.6d36a64b.chunk.js",
-    "static/js/app.7bbd12eb.chunk.js"
+    "static/js/2.1f034fe4.chunk.js",
+    "static/js/app.576b130d.chunk.js"
   ]
 }
