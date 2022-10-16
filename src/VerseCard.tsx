@@ -3,7 +3,9 @@ import React, { useState, useEffect } from 'react';
 import { Dimensions, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { Audio } from 'expo-av';
 
-const timerStart = 30;
+const oneSecondTick = 1000;
+const timeInSeconds = 30;
+const waitToStart = 3 * oneSecondTick;
 let timeOut: any = null;
 
 
@@ -26,10 +28,17 @@ function TimerBar(props: {timeLeftInSeconds: number}) {
 }
 
 
-function VerseCard(props: {verse: string, finishTurn: (chapter: string, timeLeft: number) => void}) {
+function getFormattedPossibleChapters(chapters: number[]) {
+  const arr = [...chapters];
+  const last = arr.pop();
+  return [arr.map(n => <Text key={`kch-${n}`}><b>{n}</b>, </Text>), <Text key={`kch-${last}`}>or <b>{last}</b></Text>]
+}
+
+
+function VerseCard(props: {verse: string, possibleChapters: number[], finishTurn: (chapter: string, timeLeft: number) => void}) {
 
     const [chapter, setChapter] = useState('');
-    const [timeRemaining, setTimeRemaining] = useState(timerStart);
+    const [timeRemaining, setTimeRemaining] = useState(timeInSeconds);
 
     async function playAudio() {
       const { sound } = await Audio.Sound.createAsync(require('../assets/high.wav'));
@@ -39,12 +48,15 @@ function VerseCard(props: {verse: string, finishTurn: (chapter: string, timeLeft
     useEffect(() => {
       let rm = timeRemaining;
       playAudio();
-      timeOut = setInterval(() => {
-        if (rm > 0) {
-          rm -= 1;
-          setTimeRemaining(rm);
-        }
-      }, 1000);
+      timeOut = null;
+      setTimeout(() => {
+        timeOut = setInterval(() => {
+          if (rm > 0) {
+            rm -= 1;
+            setTimeRemaining(rm);
+          }
+        }, oneSecondTick);
+      }, waitToStart);
     }, []);
 
     const exitForm = () => {
@@ -53,6 +65,7 @@ function VerseCard(props: {verse: string, finishTurn: (chapter: string, timeLeft
       }
       props.finishTurn(chapter, timeRemaining);
     }
+
 
     return (
         <View style={styles.container}>
@@ -64,6 +77,9 @@ function VerseCard(props: {verse: string, finishTurn: (chapter: string, timeLeft
             <Text style={styles.subText}>
                 Which chapter is this Scripture in?
             </Text>
+              <Text style={styles.possibleChaptersText}>
+                Is it in {getFormattedPossibleChapters(props.possibleChapters)}?
+              </Text>
             <TextInput
               autoFocus
               blurOnSubmit
@@ -115,6 +131,11 @@ const styles = StyleSheet.create({
     fontSize: 40,
     textAlign: 'center',
     fontFamily: 'CedarvilleCursive_400Regular',
+  },
+  possibleChaptersText: {
+    fontSize: 36,
+    margin: 5,
+    textAlign: 'center'
   },
   timeText: {
     fontSize: 32,

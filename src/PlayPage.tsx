@@ -14,6 +14,8 @@ import YesCard from './YesCard';
 import NoCard from './NoCard';
 import BonusChanceCard from './BonusChanceCard';
 import ScoreCard from './ScoreCard';
+import shuffleArray from './shuffleArray';
+import { getShuffledChapterArray } from './Chapters';
 
 
 const image = { uri: require('../assets/bg.jpg') };
@@ -21,12 +23,7 @@ const image = { uri: require('../assets/bg.jpg') };
 type phaseType = 'layup' | 'preview' | 'bonus' | 'verse' | 'yes' | 'no' | 'show score';
 
 
-function shuffleArray(arr: any[]) {
-    for (let i = arr.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
-}
+
 
 
 const buildCardSet = () => 
@@ -78,6 +75,7 @@ function PlayPage({ route, navigation }: Props) {
     const [bonusActive, setBonusActive] = useState(false);
     const [phase, setPhase] = useState<phaseType>('layup');
     const [scriptures, setScriptures] = useState(buildCardSet());
+    const [possibleChapters, setPossibleChapters] = useState<number[]>([]);
     const [scoreBuffer, setScoreBuffer] = useState(0);
 
     useEffect(() => {
@@ -104,6 +102,7 @@ function PlayPage({ route, navigation }: Props) {
             scriptures.splice(0, 1);
         }
         setScriptures([...scriptures]);
+        setPossibleChapters(getShuffledChapterArray(extractBook(scriptures[0]), extractChapter(scriptures[0])))
         setBonusActive(false);
         if (turn < 5) {
             setPhase('layup');
@@ -137,7 +136,7 @@ function PlayPage({ route, navigation }: Props) {
                     }
                     {
                         (phase === 'verse') &&
-                        <VerseCard verse={scriptures[0].front} finishTurn={(chapter, timeLeft) => {
+                        <VerseCard verse={scriptures[0].front} possibleChapters={possibleChapters} finishTurn={(chapter, timeLeft) => {
                             const correctChapter = extractChapter(scriptures[0]);
                             if (correctChapter === chapter) {
                                 const s = score.get(index) ?? 0;
