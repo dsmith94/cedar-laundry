@@ -1,13 +1,25 @@
 {
   "files": {
-    "app.js": "/cedar-laundry/static/js/app.b6f057e9.chunk.js",
-    "app.js.map": "/cedar-laundry/static/js/app.b6f057e9.chunk.js.map",
+    "app.js": "/cedar-laundry/static/js/app.0a192964.chunk.js",
+    "app.js.map": "/cedar-laundry/static/js/app.0a192964.chunk.js.map",
     "runtime~app.js": "/cedar-laundry/static/js/runtime~app.7431af2f.js",
     "runtime~app.js.map": "/cedar-laundry/static/js/runtime~app.7431af2f.js.map",
-    "static/js/2.1c429bd5.chunk.js": "/cedar-laundry/static/js/2.1c429bd5.chunk.js",
-    "static/js/2.1c429bd5.chunk.js.map": "/cedar-laundry/static/js/2.1c429bd5.chunk.js.map",
+    "static/js/2.f2e7996d.chunk.js": "/cedar-laundry/static/js/2.f2e7996d.chunk.js",
+    "static/js/2.f2e7996d.chunk.js.map": "/cedar-laundry/static/js/2.f2e7996d.chunk.js.map",
+    "fonts/AntDesign.ttf": "/cedar-laundry/./fonts/AntDesign.ttf",
     "fonts/BungeeShade_400Regular.ttf": "/cedar-laundry/./fonts/BungeeShade_400Regular.ttf",
     "fonts/CedarvilleCursive_400Regular.ttf": "/cedar-laundry/./fonts/CedarvilleCursive_400Regular.ttf",
+    "fonts/Entypo.ttf": "/cedar-laundry/./fonts/Entypo.ttf",
+    "fonts/Feather.ttf": "/cedar-laundry/./fonts/Feather.ttf",
+    "fonts/FontAwesome.ttf": "/cedar-laundry/./fonts/FontAwesome.ttf",
+    "fonts/FontAwesome5_Brands.ttf": "/cedar-laundry/./fonts/FontAwesome5_Brands.ttf",
+    "fonts/FontAwesome5_Solid.ttf": "/cedar-laundry/./fonts/FontAwesome5_Solid.ttf",
+    "fonts/Fontisto.ttf": "/cedar-laundry/./fonts/Fontisto.ttf",
+    "fonts/Foundation.ttf": "/cedar-laundry/./fonts/Foundation.ttf",
+    "fonts/Ionicons.ttf": "/cedar-laundry/./fonts/Ionicons.ttf",
+    "fonts/MaterialCommunityIcons.ttf": "/cedar-laundry/./fonts/MaterialCommunityIcons.ttf",
+    "fonts/MaterialIcons.ttf": "/cedar-laundry/./fonts/MaterialIcons.ttf",
+    "fonts/SimpleLineIcons.ttf": "/cedar-laundry/./fonts/SimpleLineIcons.ttf",
     "fonts/Taviraj_100Thin.ttf": "/cedar-laundry/./fonts/Taviraj_100Thin.ttf",
     "fonts/Taviraj_100Thin_Italic.ttf": "/cedar-laundry/./fonts/Taviraj_100Thin_Italic.ttf",
     "fonts/Taviraj_200ExtraLight.ttf": "/cedar-laundry/./fonts/Taviraj_200ExtraLight.ttf",
@@ -32,7 +44,7 @@
     "index.html": "/cedar-laundry/index.html",
     "manifest.json": "/cedar-laundry/manifest.json",
     "serve.json": "/cedar-laundry/serve.json",
-    "static/js/2.1c429bd5.chunk.js.LICENSE.txt": "/cedar-laundry/static/js/2.1c429bd5.chunk.js.LICENSE.txt",
+    "static/js/2.f2e7996d.chunk.js.LICENSE.txt": "/cedar-laundry/static/js/2.f2e7996d.chunk.js.LICENSE.txt",
     "static/media/bg.jpg": "/cedar-laundry/static/media/bg.d3195c8f.jpg",
     "static/media/bonus.wav": "/cedar-laundry/static/media/bonus.59413eed.wav",
     "static/media/correct.wav": "/cedar-laundry/static/media/correct.c53b0979.wav",
@@ -123,7 +135,7 @@
   },
   "entrypoints": [
     "static/js/runtime~app.7431af2f.js",
-    "static/js/2.1c429bd5.chunk.js",
-    "static/js/app.b6f057e9.chunk.js"
+    "static/js/2.f2e7996d.chunk.js",
+    "static/js/app.0a192964.chunk.js"
   ]
 }
