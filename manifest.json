@@ -2,8 +2,8 @@
   "background_color": "#ffffff",
   "display": "standalone",
   "lang": "en",
-  "name": "cedar",
-  "short_name": "cedar",
+  "name": "cedar laundry",
+  "short_name": "cedar laundry",
   "start_url": "/?utm_source=web_app_manifest",
   "orientation": "portrait",
   "icons": [
