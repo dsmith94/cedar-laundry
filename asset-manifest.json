@@ -1,7 +1,7 @@
 {
   "files": {
-    "app.js": "/cedar-laundry/static/js/app.0a192964.chunk.js",
-    "app.js.map": "/cedar-laundry/static/js/app.0a192964.chunk.js.map",
+    "app.js": "/cedar-laundry/static/js/app.b6e69a3b.chunk.js",
+    "app.js.map": "/cedar-laundry/static/js/app.b6e69a3b.chunk.js.map",
     "runtime~app.js": "/cedar-laundry/static/js/runtime~app.7431af2f.js",
     "runtime~app.js.map": "/cedar-laundry/static/js/runtime~app.7431af2f.js.map",
     "static/js/2.f2e7996d.chunk.js": "/cedar-laundry/static/js/2.f2e7996d.chunk.js",
@@ -136,6 +136,6 @@
   "entrypoints": [
     "static/js/runtime~app.7431af2f.js",
     "static/js/2.f2e7996d.chunk.js",
-    "static/js/app.0a192964.chunk.js"
+    "static/js/app.b6e69a3b.chunk.js"
   ]
 }
