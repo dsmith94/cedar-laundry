@@ -4,7 +4,7 @@
   "lang": "en",
   "name": "cedar laundry",
   "short_name": "cedar laundry",
-  "start_url": "/?utm_source=web_app_manifest",
+  "start_url": "./cedar-laundry/index.html",
   "orientation": "portrait",
   "icons": [
     {
