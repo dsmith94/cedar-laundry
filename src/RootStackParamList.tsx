@@ -2,7 +2,7 @@ import Player from "./Player";
 
 type RootStackParamList = {
     Home: undefined,
-    Play: {players: Player[]},
+    Play: {players: Player[], keyboard: boolean},
     Title: undefined;
 };
 

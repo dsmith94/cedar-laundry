@@ -10,12 +10,14 @@ function NameSlot(props: {name: string, onChangeName: (s: string) => void, image
     
     return (
         <View style={styles.container}>
-            <TextInput style={styles.text} autoCapitalize='words' placeholder='Enter Name' placeholderTextColor='gray' value={props.name} onChangeText={props.onChangeName} />
-            <TouchableOpacity onPress={() => {
+            <TouchableOpacity style={styles.imageButtonStyle} onPress={() => {
               showModal(true);
             }}>
               <Image style={styles.contain} source={ImageBank[props.image]} />
             </TouchableOpacity>
+            <View style={{width: Dimensions.get('window').width * 0.5}}>
+          <TextInput style={styles.textInput} autoCapitalize='words' placeholder='Enter Name' placeholderTextColor='gray' value={props.name} onChangeText={props.onChangeName} />
+            </View>
             <TouchableOpacity style={styles.endButton} onPress={props.deleteIndex}>
                 <Text style={styles.endButtonText}>
                     -
@@ -44,7 +46,8 @@ function NameSlot(props: {name: string, onChangeName: (s: string) => void, image
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: Dimensions.get('screen').width * 0.1,
+    flex: 1,
+    marginHorizontal: 10,
     marginVertical: 10,
     borderRadius: 10,
     borderWidth: 1,
@@ -58,9 +61,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap'
   },
+  imageButtonStyle: {
+    marginLeft: 10
+  },
   imageContainer: {
-    width: 128,
-    height: 128,
+    width: Dimensions.get('window').width * 0.15,
+    aspectRatio: 1,
     padding: 10,
     margin: 5,
     borderColor: 'brown',
@@ -68,14 +74,15 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   contain: {
-    width: 64,
-    height: 64,
+    width: Dimensions.get('window').width * 0.12,
+    aspectRatio: 1,
     resizeMode: 'contain',
   },
-  text: {
-    fontSize: 20,
+  textInput: {
+    fontSize: 40,
     textAlign: 'center',
     fontFamily: 'cursive',
+    marginHorizontal: 5,
   },
   endButtonText: {
     fontSize: 20,
@@ -88,7 +95,7 @@ const styles = StyleSheet.create({
   },
   endButton: {
     width: 64,
-    height: 64,
+    aspectRatio: 1,
     borderRadius: 10,
     backgroundColor: '#FF7276',
     justifyContent: 'center',

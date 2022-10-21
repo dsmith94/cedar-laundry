@@ -9,7 +9,7 @@ const waitToStart = 3 * oneSecondTick;
 let timeOut: any = null;
 
 
-function TimerBar(props: {timeLeftInSeconds: number}) {
+function TimerBar(props: { timeLeftInSeconds: number }) {
   let color = 'green';
   if (props.timeLeftInSeconds < 10) {
     color = 'red';
@@ -22,7 +22,7 @@ function TimerBar(props: {timeLeftInSeconds: number}) {
     height: 48,
     marginLeft: 'auto',
     marginRight: 'auto',
-    borderRadius: 20,
+    borderRadius: 24,
     backgroundColor: color
   }} />
 }
@@ -35,67 +35,93 @@ function getFormattedPossibleChapters(chapters: number[]) {
 }
 
 
-function VerseCard(props: {verse: string, possibleChapters: number[], finishTurn: (chapter: string, timeLeft: number) => void}) {
+function VerseCard(props: { verse: string, possibleChapters: number[], finishTurn: (chapter: string, timeLeft: number) => void, keyboard: boolean }) {
 
-    const [chapter, setChapter] = useState('');
-    const [timeRemaining, setTimeRemaining] = useState(timeInSeconds);
+  const [chapter, setChapter] = useState('');
+  const [timeRemaining, setTimeRemaining] = useState(timeInSeconds);
 
-    async function playAudio() {
-      const { sound } = await Audio.Sound.createAsync(require('../assets/high.wav'));
-      await sound.playAsync();
+  async function playAudio() {
+    const { sound } = await Audio.Sound.createAsync(require('../assets/high.wav'));
+    await sound.playAsync();
+  }
+
+  useEffect(() => {
+    let rm = timeRemaining;
+    playAudio();
+    timeOut = null;
+    setTimeout(() => {
+      timeOut = setInterval(() => {
+        if (rm > 0) {
+          rm -= 1;
+          setTimeRemaining(rm);
+        }
+      }, oneSecondTick);
+    }, waitToStart);
+  }, []);
+
+  const exitKeyboardForm = () => {
+    if (timeOut) {
+      clearInterval(timeOut);
     }
-  
-    useEffect(() => {
-      let rm = timeRemaining;
-      playAudio();
-      timeOut = null;
-      setTimeout(() => {
-        timeOut = setInterval(() => {
-          if (rm > 0) {
-            rm -= 1;
-            setTimeRemaining(rm);
-          }
-        }, oneSecondTick);
-      }, waitToStart);
-    }, []);
+    props.finishTurn(chapter, timeRemaining);
+  }
 
-    const exitForm = () => {
-      if (timeOut) {
-        clearInterval(timeOut);
-      }
-      props.finishTurn(chapter, timeRemaining);
+  const exitTouchForm = (guess: string) => {
+    if (timeOut) {
+      clearInterval(timeOut);
     }
+    props.finishTurn(guess, timeRemaining);
+  }
 
-
-    return (
-        <View style={styles.container}>
-            <View style={styles.backGround}>
-              <Text style={styles.text}>
-                  {props.verse}
-              </Text>
-            </View>
-            <Text style={styles.subText}>
-                Which chapter is this Scripture in?
+  function AcceptInput() {
+    return (props.keyboard) ?
+      <View>
+        <TextInput
+          autoFocus
+          blurOnSubmit
+          value={chapter}
+          onChangeText={setChapter}
+          style={styles.textInput}
+          onSubmitEditing={exitKeyboardForm}
+        />
+        <TouchableOpacity style={styles.button} onPress={exitKeyboardForm}>
+          <Text style={styles.buttonText}>
+            enter
+          </Text>
+        </TouchableOpacity>
+      </View> :
+      <View style={styles.buttonRow}>
+        {props.possibleChapters.map(c =>
+          <TouchableOpacity style={styles.choiceButton} key={`ch-${c}`} onPress={() => exitTouchForm(c.toString())}>
+            <Text style={styles.buttonText}>
+              {c}
             </Text>
-              <Text style={styles.possibleChaptersText}>
-                Is it in {getFormattedPossibleChapters(props.possibleChapters)}?
-              </Text>
-            <TextInput
-              autoFocus
-              blurOnSubmit
-              value={chapter}
-              onChangeText={setChapter}
-              style={styles.textInput}
-              onSubmitEditing={exitForm}
-            />
-            <TouchableOpacity style={styles.button} onPress={exitForm}>
-                <Text style={styles.buttonText}>
-                    Enter
-                </Text>
-            </TouchableOpacity>
-            <TimerBar timeLeftInSeconds={timeRemaining} />
-        </View>
-    );
+          </TouchableOpacity>
+        )}
+      </View>
+  }
+
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.backGround}>
+        <Text style={styles.text}>
+          {props.verse}
+        </Text>
+      </View>
+      {(!props.keyboard) ?
+        <Text style={styles.subText}>
+          Which chapter is this Scripture in?
+        </Text>
+        :
+        <Text style={styles.possibleChaptersText}>
+          Is it in chapter {getFormattedPossibleChapters(props.possibleChapters)}?
+        </Text>
+      }
+      <TimerBar timeLeftInSeconds={timeRemaining} />
+      <AcceptInput />
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -108,6 +134,28 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 20,
     backgroundColor: '#EFEFEF'
+  },
+  buttonRow: {
+    flexDirection: 'row',
+    flex: 1,
+    flexWrap: 'wrap',
+    justifyContent: 'space-evenly'
+  },
+  choiceButton: {
+    backgroundColor: '#44D7A8',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 10,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    width: 128,
+    paddingVertical: 10,
+    borderRadius: 20
+  },
+  choiceButtonText: {
+    fontSize: 40,
+    textAlign: 'center',
+    fontWeight: 'bold'
   },
   button: {
     backgroundColor: '#44D7A8',
@@ -133,7 +181,7 @@ const styles = StyleSheet.create({
     fontFamily: 'CedarvilleCursive_400Regular',
   },
   possibleChaptersText: {
-    fontSize: 36,
+    fontSize: Dimensions.get('window').width * 0.03,
     margin: 5,
     textAlign: 'center'
   },
@@ -143,12 +191,13 @@ const styles = StyleSheet.create({
     textAlign: 'right',
   },
   subText: {
-    fontSize: 32,
+    fontSize: Dimensions.get('window').width * 0.03,
+    marginBottom: 5,
     fontWeight: 'bold',
     textAlign: 'center',
   },
   text: {
-    fontSize: 30,
+    fontSize: Dimensions.get('window').width * 0.03,
     fontFamily: 'Taviraj_400Regular'
   },
 });

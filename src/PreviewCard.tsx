@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { StyleSheet, Text, View } from 'react-native';
+import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { Audio } from 'expo-av';
 
 
@@ -32,12 +32,12 @@ const styles = StyleSheet.create({
     flex: 1
   },
   bookText: {
-    fontSize: 64,
+    fontSize: Dimensions.get('window').width * 0.06,
     fontWeight: 'bold',
     textAlign: 'center',
   },
   text: {
-    fontSize: 30,
+    fontSize: Dimensions.get('window').width * 0.04,
     fontFamily: 'Taviraj_600SemiBold_Italic',
     textAlign: 'center',
   },

@@ -6,6 +6,7 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { Audio } from 'expo-av';
 import NameSlot from './NameSlot';
 import Player from './Player';
+import { FontAwesome } from '@expo/vector-icons';
 import { useIsFocused } from '@react-navigation/native';
 
 
@@ -17,6 +18,7 @@ function HomePage({ route, navigation }: Props) {
   
     const [players, setPlayers] = useState([new Player()]);
     const [sound, setSound] = useState<Audio.Sound | null>(null);
+    const [keyboard, setKeyboard] = useState(false);
 
     async function playAudio() {
       const { sound } = await Audio.Sound.createAsync(require('../assets/title.ogg'));
@@ -50,9 +52,7 @@ function HomePage({ route, navigation }: Props) {
                         select contestants
                     </Text>
                     {players.map((v, index) => <NameSlot 
-                        
                         name={v.name}
-
                         onChangeName={n => {
                             v.name = n;
                             setPlayers([...players]);
@@ -67,29 +67,32 @@ function HomePage({ route, navigation }: Props) {
                             players.splice(index, 1);
                             setPlayers([...players]);
                         }}
-
                     />)}
-                    {(players.length > 1) &&
                     <TouchableOpacity style={styles.bottomButton} onPress={() => {
                       if (sound) {
                         sound.stopAsync();
                         setSound(null);
                       }
-                        navigation.navigate('Play', {players: players});
+                        navigation.navigate('Play', {players: players, keyboard: keyboard});
                     }}>
                         <Text style={styles.text}>
-                            Start
+                            start
                         </Text>
                     </TouchableOpacity>
+                    <TouchableOpacity style={styles.leftButton} onPress={() => setKeyboard(!keyboard)}>
+                      {(keyboard) ? 
+                      <FontAwesome name="keyboard-o" size={24} color="black" /> :
+                      <FontAwesome name="hand-o-up" size={24} color="black" />
                     }
-                    <TouchableOpacity style={styles.endButton} onPress={() => {
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.rightButton} onPress={() => {
                         const p = new Player();
                         p.image = Math.floor(Math.random() * 10);
                         playSoftAudio();
                         players.push(p);
                         setPlayers([...players]);
                     }}>
-                        <Text style={styles.endButtonText}>
+                        <Text style={styles.addPlayerButtonText}>
                             +
                         </Text>
                     </TouchableOpacity>
@@ -104,7 +107,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   roundedContainer: {
-    width: Dimensions.get('screen').width * 0.7,
+    width: Dimensions.get('screen').width * 0.9,
     marginVertical: Dimensions.get('screen').height * 0.1,
     borderRadius: 20,
     backgroundColor: 'white'
@@ -118,18 +121,29 @@ const styles = StyleSheet.create({
     width: 128,
     height: 64,
     borderRadius: 20,
-    marginHorizontal: (Dimensions.get('screen').width * 0.35) - 64,
+    marginHorizontal: (Dimensions.get('screen').width * 0.45) - 64,
     backgroundColor: '#F6E1D3'
   },
-  endButtonText: {
+  addPlayerButtonText: {
     fontSize: 20,
     fontWeight: 'bold'
   },
-  endButton: {
+  leftButton: {
     width: 64,
     height: 64,
     borderRadius: 10,
-    left: (Dimensions.get('screen').width * 0.7) - 64,
+    position: 'absolute',
+    left: 0,
+    bottom: 0,
+    backgroundColor: '#44D7A8',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  rightButton: {
+    width: 64,
+    height: 64,
+    borderRadius: 10,
+    left: (Dimensions.get('screen').width * 0.9) - 64,
     backgroundColor: '#44D7A8',
     justifyContent: 'center',
     alignItems: 'center'

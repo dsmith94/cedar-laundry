@@ -34,9 +34,9 @@ function ScoreCard(props: {players: Player[], scores: Map<number, number>, finis
                     {props.scores.get(i) ?? 0}
                 </Text>
             </View>)}
-            <TouchableOpacity onPress={props.finishCard}>
+            <TouchableOpacity style={styles.bottomButton} onPress={props.finishCard}>
                 <Text style={styles.buttonText}>
-                    Exit
+                    exit
                 </Text>    
             </TouchableOpacity>
         </View>
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   finalText: {
-    fontSize: 64,
+    fontSize: Dimensions.get('window').width * 0.06,
     textAlign: 'center',
     fontFamily: 'CedarvilleCursive_400Regular',
   },
@@ -64,27 +64,37 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   imageContain: {
-    width: 64,
-    height: 64,
+    width: Dimensions.get('window').width * 0.075,
+    aspectRatio: 1,
     marginRight: 4,
     borderColor: 'brown',
     borderWidth: 2,
     resizeMode: 'contain'
   },
+  bottomButton: {
+    width: 128,
+    height: 64,
+    borderRadius: 20,
+    marginHorizontal: (Dimensions.get('window').width * 0.45) - 64,
+    backgroundColor: '#F6E1D3'
+  },
   scoreRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: Dimensions.get('screen').width * 0.67,
-    height: 64
+    marginVertical: 2,
+    marginHorizontal: 10,
+    height: 64,
+    flex: 1,
   },
   leftText: {
-    fontSize: 30,
+    fontSize: Dimensions.get('window').width * 0.06,
     fontFamily: 'Taviraj_600SemiBold_Italic',
     textAlign: 'left',
   },
   rightText: {
-    fontSize: 30,
+    marginRight: 10,
+    fontSize: Dimensions.get('window').width * 0.06,
     fontFamily: 'Taviraj_600SemiBold_Italic',
     textAlign: 'right',
   },

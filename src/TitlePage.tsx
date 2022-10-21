@@ -43,8 +43,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white'
   },
   text: {
-    fontSize: 80,
     textAlign: 'center',
+    fontSize: Dimensions.get('window').width * 0.05,
     fontFamily: 'CedarvilleCursive_400Regular',
   },
   bottomButton: {

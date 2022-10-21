@@ -26,7 +26,7 @@ type phaseType = 'layup' | 'preview' | 'bonus' | 'verse' | 'yes' | 'no' | 'show 
 
 
 
-const buildCardSet = () => 
+const buildCardSet = () =>
     Scriptures.split('$').map(c => {
         const f = new Flashcard();
         const both = c.split('%');
@@ -50,17 +50,8 @@ const extractChapter = (f: Flashcard) => {
     return chapter ?? '';
 }
 
-/*
-const extractVerse = (f: Flashcard) => {
-    const arr = f.back.split(' ');
-    const citation = arr.pop();
-    const verse = citation?.split(':')[1];
-    return verse ?? '';
-}
-*/
 
-
-const timeToWait = 3000;
+const timeToWait = 4000;
 const timeToNextTurn = 5000;
 
 
@@ -121,7 +112,7 @@ function PlayPage({ route, navigation }: Props) {
             setPhase('show score');
         }
     }
-  
+
     return (
         <View style={styles.container}>
             <ImageBackground source={image} resizeMode="cover" style={styles.image}>
@@ -136,28 +127,33 @@ function PlayPage({ route, navigation }: Props) {
                     }
                     {
                         (phase === 'verse') &&
-                        <VerseCard verse={scriptures[0].front} possibleChapters={possibleChapters} finishTurn={(chapter, timeLeft) => {
-                            const correctChapter = extractChapter(scriptures[0]);
-                            if (correctChapter === chapter) {
-                                const s = score.get(index) ?? 0;
-                                const pointsAwarded = (bonusActive === true) ? timeLeft * 2 : timeLeft;
-                                score.set(index, s + pointsAwarded);
-                                setScoreBuffer(pointsAwarded);
-                                setScore(new Map(score));
-                                setPhase('yes');
-                            } else {
-                                const s = score.get(index) ?? 0;
-                                const newPointsTotal = (bonusActive === true) ? s / 2 : s;
-                                score.set(index, Math.floor(newPointsTotal));
-                                setPhase('no');
-                            }
-                            setTimeout(advanceTurn, timeToNextTurn);
-                        }} />
+                        <VerseCard
+                            verse={scriptures[0].front}
+                            possibleChapters={possibleChapters}
+                            keyboard={route.params.keyboard}
+                            finishTurn={(chapter, timeLeft) => {
+                                const correctChapter = extractChapter(scriptures[0]);
+                                if (correctChapter === chapter) {
+                                    const s = score.get(index) ?? 0;
+                                    const pointsAwarded = (bonusActive === true) ? timeLeft * 2 : timeLeft;
+                                    score.set(index, s + pointsAwarded);
+                                    setScoreBuffer(pointsAwarded);
+                                    setScore(new Map(score));
+                                    setPhase('yes');
+                                } else {
+                                    const s = score.get(index) ?? 0;
+                                    const newPointsTotal = (bonusActive === true) ? s / 2 : s;
+                                    score.set(index, Math.floor(newPointsTotal));
+                                    setPhase('no');
+                                }
+                                setTimeout(advanceTurn, timeToNextTurn);
+                            }} />
                     }
                     {
                         (phase === 'bonus') &&
-                        <BonusChanceCard 
-                            player={players[index]} 
+                        <BonusChanceCard
+                            player={players[index]}
+                            keyboard={route.params.keyboard}
                             setBonusChance={v => {
                                 setBonusActive(v);
                                 setPhase('verse');
@@ -166,7 +162,7 @@ function PlayPage({ route, navigation }: Props) {
                     }
                     {
                         (phase === 'show score') &&
-                        <ScoreCard 
+                        <ScoreCard
                             players={players}
                             scores={score}
                             finishCard={() => {
@@ -176,7 +172,7 @@ function PlayPage({ route, navigation }: Props) {
                     }
                     {
                         (phase === 'yes') &&
-                        <YesCard 
+                        <YesCard
                             verse={scriptures[0].front}
                             citation={scriptures[0].back}
                             pointsAdded={scoreBuffer}
@@ -186,7 +182,7 @@ function PlayPage({ route, navigation }: Props) {
                     }
                     {
                         (phase === 'no') &&
-                        <NoCard 
+                        <NoCard
                             verse={scriptures[0].front}
                             citation={scriptures[0].back}
                             currentTotal={score.get(index) ?? 0}
@@ -199,45 +195,45 @@ function PlayPage({ route, navigation }: Props) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  roundedContainer: {
-    width: Dimensions.get('screen').width * 0.7,
-    marginVertical: 10,
-    paddingBottom: Dimensions.get('screen').height * 0.05,
-    borderRadius: 20,
-    backgroundColor: 'white'
-  },
-  text: {
-    fontSize: 32,
-    textAlign: 'center',
-  },
-  bottomButton: {
-    width: 128,
-    height: 64,
-    borderRadius: 20,
-    marginHorizontal: (Dimensions.get('screen').width * 0.35) - 64,
-    backgroundColor: 'gray'
-  },
-  endButtonText: {
-    fontSize: 20,
-    fontWeight: 'bold'
-  },
-  endButton: {
-    width: 64,
-    height: 64,
-    borderRadius: 10,
-    left: (Dimensions.get('screen').width * 0.7) - 64,
-    backgroundColor: '#44D7A8',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  image: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+    container: {
+        flex: 1,
+    },
+    roundedContainer: {
+        width: Dimensions.get('screen').width * 0.9,
+        marginVertical: 10,
+        paddingBottom: Dimensions.get('screen').height * 0.05,
+        borderRadius: 20,
+        backgroundColor: 'white'
+    },
+    text: {
+        fontSize: Dimensions.get('window').width * 0.025,
+        textAlign: 'center',
+    },
+    bottomButton: {
+        width: 128,
+        height: 64,
+        borderRadius: 20,
+        marginHorizontal: (Dimensions.get('screen').width * 0.35) - 64,
+        backgroundColor: 'gray'
+    },
+    endButtonText: {
+        fontSize: 20,
+        fontWeight: 'bold'
+    },
+    endButton: {
+        width: 64,
+        height: 64,
+        borderRadius: 10,
+        left: (Dimensions.get('screen').width * 0.7) - 64,
+        backgroundColor: '#44D7A8',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    image: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
 });
 
 export default PlayPage;

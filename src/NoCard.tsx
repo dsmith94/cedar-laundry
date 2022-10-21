@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { StyleSheet, Text, View } from 'react-native';
+import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { Audio } from 'expo-av';
 
 
@@ -24,9 +24,6 @@ function NoCard(props: {citation: string, verse: string, currentTotal: number}) 
               <Text style={styles.subText}>
                   {props.citation}
               </Text>
-            <Text style={styles.text}>
-                {props.verse}
-            </Text>
             </View>
             <Text style={styles.scoreText}>
                  Score: {props.currentTotal}
@@ -47,21 +44,21 @@ const styles = StyleSheet.create({
     backgroundColor: '#EFEFEF'
   },
   noText: {
-    fontSize: 64,
+    fontSize: Dimensions.get('window').width * 0.06,
     textAlign: 'center',
     fontFamily: 'CedarvilleCursive_400Regular',
   },
   subText: {
-    fontSize: 28,
+    fontSize: Dimensions.get('window').width * 0.04,
     fontWeight: 'bold',
     textAlign: 'center',
   },
   scoreText: {
-    fontSize: 36,
+    fontSize: Dimensions.get('window').width * 0.03,
     textAlign: 'center',
   },
   text: {
-    fontSize: 25,
+    fontSize: Dimensions.get('window').width * 0.02,
     fontFamily: 'Taviraj_400Regular'
   },
 });

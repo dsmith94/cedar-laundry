@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { StyleSheet, Text, View, Dimensions } from 'react-native';
 import { Audio } from 'expo-av';
@@ -6,57 +6,55 @@ import { Audio } from 'expo-av';
 
 let tmr: any = null;
 
-function YesCard(props: {citation: string, verse: string, specialMsg: boolean, pointsAdded: number, currentTotal: number}) {
+function YesCard(props: { citation: string, verse: string, specialMsg: boolean, pointsAdded: number, currentTotal: number }) {
 
-    const [finalTotal, setFinalTotal] = useState(props.currentTotal - props.pointsAdded);
-    const [points, setPoints] = useState(props.pointsAdded);
+  const [finalTotal, setFinalTotal] = useState(props.currentTotal - props.pointsAdded);
+  const [points, setPoints] = useState(props.pointsAdded);
 
-    async function playAudio() {
-      const { sound } = await Audio.Sound.createAsync(require('../assets/correct.wav'));
-      await sound.playAsync();
-    }
+  async function playAudio() {
+    const { sound } = await Audio.Sound.createAsync(require('../assets/correct.wav'));
+    await sound.playAsync();
+  }
 
-    useEffect(() => {
-      let pt = props.pointsAdded;
-      playAudio();
-      setTimeout(() => {
-        tmr = setInterval(() => {
-          if (pt > 0) {
-            pt -= 1;
-            setFinalTotal(props.currentTotal - pt);
-            setPoints(pt);
-          } else {
-            clearInterval(tmr);
-          }
-        }, 25);
-      }, 2000);
-    }, []);
+  useEffect(() => {
+    let pt = props.pointsAdded;
+    playAudio();
+    setTimeout(() => {
+      tmr = setInterval(() => {
+        if (pt > 0) {
+          pt -= 1;
+          setFinalTotal(props.currentTotal - pt);
+          setPoints(pt);
+        } else {
+          clearInterval(tmr);
+        }
+      }, 25);
+    }, 2000);
+  }, []);
 
-    return (
-        <View style={styles.container}>
-            <Text style={styles.yesText}>
-                you're right!
-            </Text>
-            {(props.specialMsg === true) &&
-            <Text style={styles.specialText}>
-                x2 points awarded!
-            </Text>
-            }
-            <View style={styles.backGround}>
-              <Text style={styles.subText}>
-                  {props.citation}
-              </Text>
-            <Text style={styles.text}>
-                {props.verse}
-            </Text>
-            </View>
-            <View style={styles.bottomBar}>
-            <Text style={styles.scoreText}>
-                {(points > 0) && <Text style={styles.bigScoreText}>{points}</Text>} Score: {finalTotal}
-            </Text>
-            </View>
-        </View>
-    );
+  return (
+    <View style={styles.container}>
+      {(props.specialMsg === true) ?
+        <Text style={styles.specialText}>
+          x2 points awarded!
+        </Text>
+        :
+        <Text style={styles.yesText}>
+          you're right!
+        </Text>
+      }
+      <View style={styles.backGround}>
+        <Text style={styles.subText}>
+          {props.citation}
+        </Text>
+      </View>
+      <View style={styles.bottomBar}>
+        <Text style={styles.scoreText}>
+          {(points > 0) && <Text style={styles.bigScoreText}>{points}</Text>} Score: {finalTotal}
+        </Text>
+      </View>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -64,9 +62,9 @@ const styles = StyleSheet.create({
     flex: 1
   },
   bottomBar: {
-    width: Dimensions.get('screen').width * 0.7,
+    width: Dimensions.get('screen').width * 0.9,
     height: 128,
-    flexDirection:'row',
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     right: 'auto'
@@ -78,30 +76,30 @@ const styles = StyleSheet.create({
     backgroundColor: '#EFEFEF'
   },
   yesText: {
-    fontSize: 64,
+    fontSize: Dimensions.get('window').width * 0.06,
     textAlign: 'center',
     fontFamily: 'CedarvilleCursive_400Regular',
   },
   subText: {
-    fontSize: 28,
+    fontSize: Dimensions.get('window').width * 0.04,
     fontWeight: 'bold',
     textAlign: 'center',
   },
   scoreText: {
-    fontSize: 36,
+    fontSize: Dimensions.get('window').width * 0.03,
     textAlign: 'center',
   },
   bigScoreText: {
-    fontSize: 64,
+    fontSize: Dimensions.get('window').width * 0.06,
     fontFamily: 'Taviraj_600SemiBold_Italic'
   },
   specialText: {
-    fontSize: 80,
+    fontSize: Dimensions.get('window').width * 0.06,
     textAlign: 'center',
     fontFamily: 'BungeeShade_400Regular'
   },
   text: {
-    fontSize: 25,
+    fontSize: Dimensions.get('window').width * 0.02,
     fontFamily: 'Taviraj_400Regular'
   },
 });
